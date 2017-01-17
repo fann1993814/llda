@@ -47,10 +47,10 @@ class LLDA:
         for x in label: vec[self.labelmap[x]] = 1.0
         return vec
 
-    def set_corpus(self, corpus, labels = None):
+    def set_corpus(self, corpus, labels = []):
 
         self.labelset = []
-        if labels:
+        if len(labels) != 0:
             for label in labels:
                 self.labelset += label
             self.labelset = list(set(self.labelset))
@@ -111,7 +111,7 @@ class LLDA:
                     
             sys.stderr.write("-- %d : %.4f\n" % (_iter, self.perplexity()))
 
-    def folding(self, new_doc = [], label = None, iteration = 50):
+    def folding(self, new_doc = [], label = [], iteration = 50):
         V = len(self.vocas)
         kalpha = self.K * self.alpha
         vbeta = V * self.beta
