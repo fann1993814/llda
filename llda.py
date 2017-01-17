@@ -88,8 +88,6 @@ class LLDA:
         vbeta = V * self.beta
         
         for _iter in range(iteration):
-            b = 0
-            c = 0
             for m, doc, label in zip(range(len(self.docs)), self.docs, self.labels):
                 #start = time.time()
                 for n in range(len(doc)):
