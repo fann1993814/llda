@@ -139,10 +139,10 @@ class LLDA:
                 n_m_z[0, z] -= 1
                 n_z_t[z, t] -= 1
                 n_z[z] -= 1
-				
+                
                 denom_b = n_z + self.n_z + vbeta
-				
-                p_z = label * (self.n_z_t[:, t] + self.beta) * (self.n_m_z[m] + self.alpha) / denom_b 
+                
+                p_z = label * (n_z + self.n_z_t[:, t] + self.beta) * (n_m_z[0] + self.alpha) / denom_b 
                 new_z = numpy.random.multinomial(1, p_z / p_z.sum()).argmax()
 
                 z_n[n] = new_z
