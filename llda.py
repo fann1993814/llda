@@ -187,7 +187,7 @@ def main():
     labelset, corpus, labels = load_corpus(options.filename)
 
     llda = LLDA(options.K, options.alpha, options.beta)
-    llda.set_corpus(labelset, corpus, labels)
+    llda.set_corpus(corpus, labels)
 
     llda.inference(options.iteration)
 
