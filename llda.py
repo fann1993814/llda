@@ -89,7 +89,6 @@ class LLDA:
         
         for _iter in range(iteration):
             for m, doc, label in zip(range(len(self.docs)), self.docs, self.labels):
-                #start = time.time()
                 for n in range(len(doc)):
                     t = doc[n]
                     z = self.z_m_n[m][n]
@@ -109,7 +108,7 @@ class LLDA:
                     
             sys.stderr.write("-- %d : %.4f\n" % (_iter, self.perplexity()))
 
-    def folding(self, new_doc = [], label = [], iteration = 50):
+    def fold(self, new_doc = [], label = [], iteration = 50):
         V = len(self.vocas)
         kalpha = self.K * self.alpha
         vbeta = V * self.beta
