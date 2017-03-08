@@ -1,26 +1,30 @@
 # -*- coding: utf-8 -*-
+import sys
+import re
 from optparse import OptionParser
-import sys, re, numpy
+
+import numpy
+
 
 def load_corpus(filename):
     corpus = []
     labels = []
     labelmap = dict()
-    f = open(filename, 'r')
-    for line in f:
-        mt = re.match(r'\[(.+?)\](.+)', line)
-        if mt:
-            label = mt.group(1).split(',')
-            for x in label: labelmap[x] = 1
-            line = mt.group(2)
-        else:
-            label = None
-        doc = re.findall(r'\w+(?:\'\w+)?',line.lower())
-        if len(doc)>0:
-            corpus.append(doc)
-            labels.append(label)
-    f.close()
+    with open(filename, 'r') as f:
+        for line in f:
+            mt = re.match(r'\[(.+?)\](.+)', line)
+            if mt:
+                label = mt.group(1).split(',')
+                for x in label: labelmap[x] = 1 
+                line = mt.group(2)
+            else:
+                label = None
+            doc = re.findall(r'\w+(?:\'\w+)?',line.lower())
+            if len(doc) > 0:
+                corpus.append(doc)
+                labels.append(label)
     return labelmap.keys(), corpus, labels
+
 
 class LLDA:
     def __init__(self, alpha, beta, K = 100):
@@ -192,7 +196,8 @@ def main():
 
     phi = llda.phi()
     for v, voca in enumerate(llda.vocas):
-        print (','.join([voca]+[str(x) for x in phi[:,v]]))
+        print(','.join([voca]+[str(x) for x in phi[:,v]]))
+
 
 if __name__ == "__main__":
     main()
