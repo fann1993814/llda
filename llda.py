@@ -143,7 +143,8 @@ class LLDA:
                 
                 denom_b = n_z + self.n_z + vbeta
                 
-                p_z = label * (n_z + self.n_z_t[:, t] + self.beta) * (n_m_z[0] + self.alpha) / denom_b 
+                #p_z = label * (n_z + self.n_z_t[:, t] + self.beta) * (n_m_z[0] + self.alpha) / denom_b
+                p_z = label * (n_z_t[:, t] + self.n_z_t[:, t] + self.beta) * (n_m_z[0] + self.alpha) / denom_b 
                 new_z = numpy.random.multinomial(1, p_z / p_z.sum()).argmax()
 
                 z_n[n] = new_z
@@ -153,9 +154,11 @@ class LLDA:
 
         labels = numpy.array([label])
         n_alpha = n_m_z + labels * self.alpha
+        
         return (n_alpha / n_alpha.sum(axis=1)[:, numpy.newaxis])[0]
         
     def phi(self):
+        """topic-word distribution"""
         V = len(self.vocas)
         return (self.n_z_t + self.beta) / (self.n_z[:, numpy.newaxis] + V * self.beta)
 
